@@ -48,7 +48,8 @@ class MyComponent extends React.Component {
 |`font`|font family|`'Arial'`|
 |`fontWeight`|font weight|`'bold'`|
 |`clockwise`|direction of progression|`true`|
-|`cursor`|use cursor display mode - give width value or `true` which uses the default cursor width (30)|`false`|
+|`cursor`|use cursor display mode - give width value or an array of objects with properties `value`, `color`, and `widthMultiplier`, which will be multiplies by the thickness to determine cursor size|`false`|
+|`connector`|draw connector between first two cursors - give object with `color` property|`false`|
 |`stopper`|stop at min & max on keydown/mousewheel|`true`|
 |`readOnly`|disable all user input|`false`|
 |`disableTextInput`|disable manual text input only|`false`|
