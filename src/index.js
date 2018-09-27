@@ -77,7 +77,6 @@ class Knob extends React.Component {
     super(props);
     this.w = this.props.width || 200;
     this.h = this.props.height || this.w;
-    // this.cursorExt = this.props.cursor === true ? 0.3 : this.props.cursor / 100;
     this.angleArc = this.props.angleArc * Math.PI / 180;
     this.angleOffset = this.props.angleOffset * Math.PI / 180;
     this.startAngle = (1.5 * Math.PI) + this.angleOffset;
@@ -115,7 +114,7 @@ class Knob extends React.Component {
     this.canvasRef.removeEventListener('touchstart', this.handleTouchStart);
   }
 
-  getArcToValue = (v, type='knob', cursor) => {
+  getArcToValue = (v, type='knob', cursorSize=1) => {
     let startAngle,
         endAngle,
         cursorExt,
@@ -143,7 +142,7 @@ class Knob extends React.Component {
       startAngle = connectEndAngle - connector;
       endAngle += connector;
     } else if (this.props.cursor && type === 'cursor') {
-      cursorExt = cursor.widthMultiplier / 100;
+      cursorExt = cursorSize / 100;
       startAngle = endAngle - cursorExt;
       endAngle += cursorExt;
     }
@@ -333,7 +332,7 @@ class Knob extends React.Component {
       for (let i = this.props.cursor.length - 1; i >= 0; i--) {
         const cursor = this.props.cursor[i];
         const value = cursor.value ? cursor.value : this.props.value;
-        const b = this.getArcToValue(value, 'cursor', cursor);
+        const b = this.getArcToValue(value, 'cursor', cursor.widthMultiplier);
         ctx.beginPath();
         ctx.strokeStyle = this.props.cursor[i].color || this.props.fgColor;
         ctx.lineWidth = this.props.cursor[i].widthMultiplier ? this.lineWidth * this.props.cursor[i].widthMultiplier : this.lineWidth;
@@ -342,7 +341,7 @@ class Knob extends React.Component {
       }
     } else if (this.props.cursor) {
       // foreground arc
-      const a = this.getArcToValue(this.props.value);
+      const a = this.getArcToValue(this.props.value, 'cursor');
       ctx.beginPath();
       ctx.strokeStyle = this.props.fgColor;
       ctx.arc(
